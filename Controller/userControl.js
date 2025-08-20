@@ -18,7 +18,7 @@ const signUpHandler = async (req, res) => {
       ...req.body,
       password: hashedPassword,
     });
-    const sendMails = sendEmail(email,name)  ///Send Email function invoked here
+    const sendMails =  await sendEmail(email, name); ///Send Email function invoked here
     if (!UserSignUp) {
       res.status(404).json({
         Message: "Sign Up Failed",
@@ -29,7 +29,8 @@ const signUpHandler = async (req, res) => {
       Message: "User Sign Up Successful",
       Status: "success",
       User: UserSignUp,
-      sendMails
+      EmailMessage: `Email Verification link sent to ${email}✅...`,
+      sendMails,
     });
   } catch (error) {
     console.log(error);
